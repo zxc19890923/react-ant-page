@@ -1,0 +1,57 @@
+import React from "react";
+import {Button, Icon, Pagination} from 'antd';
+import $ from "jquery";
+
+// class Main extends React.Component {
+var Main = React.createClass({
+    getInitialState() {
+        return {
+            // 总页数
+            total: 20
+        }
+    },
+    onShowSizeChange(current, pageSize) {
+        console.log(current, pageSize);
+        // 这里传递pageSize, 也要查询数据库, pageSize就是limit的值
+    },
+    onChange(current) {
+        console.log(current);
+        // 这里可以返回分页的当前页, 然后根据当前页来查询数据, 从而展现不同的数据
+        // $.get(
+        //
+        // )
+    },
+    componentDidMount() {
+        $.get(
+            "data.json",
+            "json",
+            function(data) {
+                this.setState({
+                    total: data.length
+                })
+            }.bind(this)
+        )
+    },
+    render() {
+        return (
+            <div>
+                <p>
+                    使用ant
+                </p>
+                <Button type="primary">Primary</Button>
+                <Button>Default</Button>
+                <p>
+                    <Icon type="link"></Icon>
+                    <Icon type="message"></Icon>
+                    <Icon type="edit"></Icon>
+                    <Icon type="user"></Icon>
+                </p>
+                {/* onChange当前页 onShowSizeChange每页显示多少个 当前页*/}
+                <Pagination showSizeChanger onChange={this.onChange} onShowSizeChange={this.onShowSizeChange}
+                            defaultCurrent={1} total={this.state.total}/>
+            </div>
+        )
+    }
+});
+
+export default Main;
